@@ -1,0 +1,7 @@
+# Compiled/Binary files
+*.class
+*.jar
+*.so
+
+# Common compressed file
+*.tar.gz
