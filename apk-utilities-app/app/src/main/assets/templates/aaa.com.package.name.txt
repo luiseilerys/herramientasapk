@@ -1,0 +1,13 @@
+[BEGIN]
+Sample patch
+
+[PACKAGE]
+[CLASSES]
+
+// Patch comment
+
+{"original":"12 34 ?? 78"}
+{"replaced":"87 ?? 43 21"}
+
+[END]
+Done
