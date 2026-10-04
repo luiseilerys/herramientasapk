@@ -1,2 +1,3 @@
-# Dependency/Package files
-*.deb
+apk-utilities-app/.gradle/
+apk-utilities-app/build/
+apk-utilities-app/app/build/

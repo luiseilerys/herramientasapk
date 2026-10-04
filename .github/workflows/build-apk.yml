@@ -1,0 +1,69 @@
+name: Build apk-utilities APK
+
+on:
+  workflow_dispatch:        # Run workflow manual desde la pestaña Actions
+  push:
+    paths:
+      - 'apk-utilities-app/**'
+      - '.github/workflows/build-apk.yml'
+  pull_request:
+    paths:
+      - 'apk-utilities-app/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Unpack Termux runtime (.deb -> assets/native)
+        run: |
+          set -e
+          DEST=apk-utilities-app/app/src/main/assets/native
+          mkdir -p "$DEST"
+          cd tools/debs
+          for d in *.deb; do
+            ar x "$d" 2>/dev/null || bsdtar -xf "$d" || true
+            if [ -f data.tar.xz ]; then
+              tar -xJf data.tar.xz -C "../../$DEST" ./usr/bin ./usr/lib 2>/dev/null || \
+              tar -xJf data.tar.xz -C "../../$DEST" || true
+              rm -f data.tar.xz control.tar.* debian-binary
+            fi
+          done
+          echo "native payload:"; du -sh "../../$DEST"; ls "../../$DEST/usr" 2>/dev/null || true
+
+      - name: Unpack embedded Java (JBR)
+        run: |
+          set -e
+          if [ -f tools/jbr.tar.gz ]; then
+            mkdir -p apk-utilities-app/app/src/main/assets/java
+            tar -xzf tools/jbr.tar.gz -C apk-utilities-app/app/src/main/assets/java
+            ls apk-utilities-app/app/src/main/assets/java
+          fi
+
+      - name: Make gradlew executable
+        run: chmod +x apk-utilities-app/gradlew
+
+      - name: Build debug APK
+        working-directory: apk-utilities-app
+        env:
+          ANDROID_HOME: ${{ steps.setup-android.outputs.sdk-dir }}
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-utilities-debug
+          path: apk-utilities-app/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
