@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/buttonBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="4dp">
+
+            <Button android:id="@+id/btnAaptDump" style="@style/ToolBtn" android:text="aapt-dump" />
+            <Button android:id="@+id/btnDecode" style="@style/ToolBtn" android:text="decode" />
+            <Button android:id="@+id/btnBuild" style="@style/ToolBtn" android:text="build" />
+            <Button android:id="@+id/btnSign" style="@style/ToolBtn" android:text="sign" />
+            <Button android:id="@+id/btnBaksmali" style="@style/ToolBtn" android:text="baksmali" />
+            <Button android:id="@+id/btnSmali" style="@style/ToolBtn" android:text="smali" />
+            <Button android:id="@+id/btnEnjarify" style="@style/ToolBtn" android:text="enjarify" />
+            <Button android:id="@+id/btnDexify" style="@style/ToolBtn" android:text="dexify" />
+            <Button android:id="@+id/btnMerge" style="@style/ToolBtn" android:text="merge" />
+            <Button android:id="@+id/btnPull" style="@style/ToolBtn" android:text="pull" />
+            <Button android:id="@+id/btnInstall" style="@style/ToolBtn" android:text="install" />
+            <Button android:id="@+id/btnLpPull" style="@style/ToolBtn" android:text="lp-pull" />
+            <Button android:id="@+id/btnLpPush" style="@style/ToolBtn" android:text="lp-push" />
+            <Button android:id="@+id/btnClean" style="@style/ToolBtn" android:text="clean" />
+            <Button android:id="@+id/btnImport" style="@style/ToolBtn" android:text="IMPORT" />
+            <Button android:id="@+id/btnTerminal" style="@style/ToolBtn" android:text="TERM" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/statusLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:typeface="monospace"
+        android:textSize="12sp"
+        android:padding="4dp"
+        android:text="Listo. IMPORT un APK/dex/jar y pulsa una herramienta." />
+
+    <EditText
+        android:id="@+id/terminalInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="$ comando bash (menu, ls, java -version…)"
+        android:imeOptions="actionGo"
+        android:inputType="textNoSuggestions"
+        android:typeface="monospace"
+        android:textSize="13sp"
+        android:maxLines="1"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/outputScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <TextView
+            android:id="@+id/outputText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:typeface="monospace"
+            android:textSize="12sp"
+            android:padding="6dp" />
+    </ScrollView>
+
+</LinearLayout>

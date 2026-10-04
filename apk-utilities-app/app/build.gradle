@@ -1,0 +1,45 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.apkutils.app'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.apkutils.app"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        debug {
+            // sin minify, firma de depuración automática
+        }
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // los assets nativos (.deb, jars, python) no deben comprimirse:
+    // se extraen tal cual y algunos binarios necesitan exec/lectura directa
+    androidResources {
+        noCompress ''
+    }
+
+    packagingOptions {
+        jniLibs { useLegacyPackaging = true }
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+}
